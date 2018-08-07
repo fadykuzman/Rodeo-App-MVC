@@ -52,9 +52,9 @@ class TestForm(tk.Frame):
                 self._pot_ids = tk.StringVar()
                 self._pot_ids.set(_id)
 
-                pot_name = ttk.Label(self.pots_list,
+                self.pot_name = ttk.Label(self.pots_list,
                     textvariable=self._pot_ids)
-                pot_name.grid(row=i, column=0, padx=5, pady=5)
+                self.pot_name.grid(row=i, column=0, padx=3, pady=2)
         else:
             pot_name = ttk.Label(self.pots_list,
                 text='No Potentiostats Available')
