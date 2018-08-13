@@ -48,12 +48,12 @@ class TestForm(tk.Frame):
 
         if len(self.connected_pots):
             for i, (_id, _p) in zip(
-                range(len(self.pots)), self.connected_pots.items()):
+                range(len(self.connected_pots)), self.connected_pots.items()):
                 self._pot_ids = tk.StringVar()
                 self._pot_ids.set(_id)
 
                 self.pot_name = ttk.Label(self.pots_list,
-                    textvariable=self._pot_ids)
+                    textvariable='{}'.format(self._pot_ids))
                 self.pot_name.grid(row=i, column=0, padx=3, pady=2)
         else:
             pot_name = ttk.Label(self.pots_list,
@@ -186,12 +186,12 @@ class TestForm(tk.Frame):
         self.electrode_frame = tk.LabelFrame(params_input,
            text='Electrode / Electrolyte')
         self.inputs['electrode'] = w.LabelInput(
-            self.electrode_frame, 'Type',
+        self.electrode_frame, 'Type',
             input_var=tk.StringVar())
         self.inputs['electrode'].grid(
-             row=0, column=2, padx=5, pady=5)
+            row=1, column=2, padx=5, pady=5)
         self.electrode_frame.grid(
-             row=1, column=2, padx=5, pady=5)
+            row=1, column=2, padx=5, pady=5)
 
         ### Start Stop Button Frame ###
         self.strt_stp = tk.Frame(self)
@@ -217,6 +217,7 @@ class TestForm(tk.Frame):
             thread = Thread(target=m.ChronoampModel().run_test,
                 args=(p,),
                 kwargs={
+                    'device_id': k,
                     'test_name': self.get()['test_name'],
                     'curr_range': self.get()['curr_range'],
                     'out_volt_range': self.get()['output_volt'],

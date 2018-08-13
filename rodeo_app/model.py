@@ -46,6 +46,21 @@ class ChronoampModel:
         step1_duration = params.get('step1_duration', 3000)
         step2_volt = params.get('step2_volt', 0.0)
         step2_duration = params.get('step2_duration', 0)
+        device_id = params.get('device_id', None)
+        corrected_values = {
+            'pot1': -0.5076,
+            'pot2': -0.5023,
+            'pot3': -0.5027,
+            'pot4': -0.5043,
+            'pot5': -0.5071,
+            'pot6': -0.5082
+        }
+
+        #corrected_steps = {}
+
+        for key, value in corrected_values.items():
+            if device_id == key:
+                step1_volt = value
 
         step = [
             (step1_duration, step1_volt),
@@ -99,7 +114,8 @@ class ChronoampModel:
             'out_volt_range': out_volt_range,
             'test_name': test_name,
             'potentio_id': potentiostat.get_device_id(),
-            'electrode': params.get('electrode', None)
+            'electrode': params.get('electrode', None),
+
          }
 
         df = pd.DataFrame(d)
