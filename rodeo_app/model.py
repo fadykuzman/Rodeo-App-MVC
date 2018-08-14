@@ -3,6 +3,7 @@ from time import time
 from datetime import datetime
 from potentiostat import Potentiostat
 import pandas as pd
+import numpy as np
 
 class PotentiostatsModel:
 
@@ -41,7 +42,7 @@ class ChronoampModel:
 
         quietValue = params.get('quietValue', 0.0)
         quietTime = params.get('quietTime', 0)
-        run_duration = params.get('run_duration', 3000)
+        run_duration = params.get('run_duration', 3) * 1000
         step1_volt = params.get('step1_volt', 0.05)
         step1_duration = params.get('step1_duration', 3000)
         step2_volt = params.get('step2_volt', 0.0)
@@ -86,13 +87,24 @@ class ChronoampModel:
         current_all = []
         start_time = datetime.now()
 
+        i = 0
+
         while run_duration != 0:
 
             time, volt, current = potentiostat.run_test(test_name, display='pbar')
-            time_all += time
+
+            time_corrected = []
+
+            for t in time:
+                t = t + i
+                time_corrected.append(t)
+            # time = np.array(time)
+            # time_corrected = time + i
+            # time = list(time_corrected)
+            time_all += time_corrected
             volt_all += volt
             current_all += current
-
+            i = i + 1
             run_duration -= step_duration
 
         end_time = datetime.now()

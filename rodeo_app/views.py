@@ -119,11 +119,11 @@ class TestForm(tk.Frame):
 
         ### Duration and Sample Rate Frame ###
         self._run_duration = tk.IntVar()
-        self._run_duration.set('3000')
+        self._run_duration.set('3')
         self.d_s_rate_frame = tk.LabelFrame(params_input,
             text='Duration and Sample Rate')
         self.inputs['run_duration'] = w.LabelInput(
-            self.d_s_rate_frame, 'Run Duration (ms)',
+            self.d_s_rate_frame, 'Run Duration (s)',
             input_args={'width': 7},
             input_var=self._run_duration)
         self.inputs['run_duration'].grid(
@@ -234,7 +234,7 @@ class TestForm(tk.Frame):
             thread.start()
 
     def stop_run(self):
-        for k, p in connected_pots.items():
+        for k, p in self.connected_pots.items():
             thread = Thread(target=p.stop_test)
             thread.start()
 
